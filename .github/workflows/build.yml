@@ -7,6 +7,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+      - run: cp README.md public/README.md && cd public/
       - uses: docker://pandoc/core:3.1
         with:
           args: >-  # allows you to break string into multiple lines
@@ -15,12 +16,8 @@ jobs:
             -V revealjs-url=https://unpkg.com/reveal.js/
             -V theme=solarized
             --include-in-header=slides.css
-      - run: >
-          mkdir gh-pages &&
-          mv index.html gh-pages/ &&
-          mv imgs gh-pages/imgs
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./gh-pages
+          publish_dir: ./public
           keep_files: true

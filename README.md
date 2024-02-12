@@ -3,7 +3,12 @@ author: Avi Vajpeyi
 title: Population Inference with active learning
 subtitle: NZ Gravity Workshop, Summer 2024
 date: February 16 2024
+background-image: imgs/background.png
+data-background-size: cover
+
 ---
+
+
 
 ## Outline
 
@@ -18,37 +23,36 @@ date: February 16 2024
 ## Astronomical populations 
 
 
----
-
 ### Stars 
 
----
+
 
 ### Compact binaries 
-
----
 
 ## Learning from populations
 
 `Population inference`
 
----
 
 ### The 'inference' loop
 
 search 
 
----
 
 ### Population model
 
----
+
+![](imgs/model.gif)
+
+
+### Estimated 
+
+[//]: # (---------------------------------------------)
 
 ## Active learning
 
 Training a 'surrogate' model
 
----
 
 ### Improve 'NN' with new data while training
 
@@ -62,22 +66,45 @@ Training a 'surrogate' model
 [al_end]: https://raw.githubusercontent.com/maurock/snake-ga/master/img/snake_new.gif
 
 
----
 
 ### Bayesian Optimisation
 
-[//]: # (Include the iframe imgs/gp_animation.html)
+<a href="https://gifyu.com/image/SCD96"><img src="https://s13.gifyu.com/images/SCD96.gif" alt="model" border="0" /></a>
 
-<iframe src="imgs/gp_animation.html" style="width:100%; height:700px"></iframe>
+### COMPAS Surrogate + Bayesian Opt loop
 
----
-
-### Bayesian Optimisation
-
-[//]: # (Include the iframe imgs/gp_animation.html)
+<a href="https://gifyu.com/image/SCD94"><img src="https://s13.gifyu.com/images/SCD94.gif" alt="bo al main" border="0" /></a>
 
 
 
- <div style = "text-align: left;">
-    <embed style="border: none;" src="imgs/gp_animation.html" dpi="300" width="70%" height="500px" />
-  </div>
+
+
+
+
+
+
+
+
+
+[//]: # (---------------------------------------------)
+## Preliminary results
+
+
+### Surrogate training progress
+
+
+### Parameter estimates
+
+
+
+### Posterior-posterior test
+
+
+
+### Next steps 
+
+- Simulation studies with various surrogates
+- Simulation studies with uncertain data
+- Real LVK dataset
+
+[//]: # (---------------------------------------------)
