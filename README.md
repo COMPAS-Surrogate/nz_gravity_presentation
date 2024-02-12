@@ -57,14 +57,9 @@ Training a 'surrogate' model
 ### Improve 'NN' with new data while training
 
 
-| Start       | 50 iterations |
-|-------------|---------------|
-| ![al_start] | ![al_end]     |
-
-
-[al_start]: https://raw.githubusercontent.com/maurock/snake-ga/master/img/notraining.gif
-[al_end]: https://raw.githubusercontent.com/maurock/snake-ga/master/img/snake_new.gif
-
+| Start                                                                                            | 50 iterations |
+|--------------------------------------------------------------------------------------------------|---------------|
+| <img src="https://raw.githubusercontent.com/maurock/snake-ga/master/img/notraining.gif" height=350px> | <img src="https://raw.githubusercontent.com/maurock/snake-ga/master/img/snake_new.gif" height=350px>    |
 
 
 ### Bayesian Optimisation
