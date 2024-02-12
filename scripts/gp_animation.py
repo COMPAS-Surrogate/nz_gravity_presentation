@@ -223,7 +223,7 @@ def plotly_plots():
     fig.update_layout(updatemenus=updatemenus, sliders=sliders, template='simple_white',
                       xaxis_visible=False, yaxis_visible=False
                       )
-    plot(fig, filename='../gp_animation.html', auto_play=False)
+    plot(fig, filename='../imgs/gp_animation.html', auto_play=False)
 
 
 
