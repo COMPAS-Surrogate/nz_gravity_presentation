@@ -77,6 +77,7 @@ Training a 'surrogate' model
 [//]: # (Include the iframe imgs/gp_animation.html)
 
 
+
  <div style = "text-align: left;">
     <embed style="border: none;" src="imgs/gp_animation.html" dpi="300" width="70%" height="500px" />
   </div>

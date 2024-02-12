@@ -15,9 +15,11 @@ jobs:
             -V revealjs-url=https://unpkg.com/reveal.js/
             -V theme=solarized
             --include-in-header=slides.css
-      - run: mkdir gh-pages && mv index.html gh-pages/
+      - run: |
+        mkdir gh-pages
+        mv index.html gh-pages/
+        mv imgs gh-pages/imgs
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./gh-pages
           keep_files: true
