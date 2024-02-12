@@ -1,27 +1,57 @@
 ---
 author: Avi Vajpeyi
-title: Slides Template
-subtitle: Reveal JS, Spring 2021
-date: January XX 20XX
+title: Population Inference with active learning
+subtitle: NZ Gravity Workshop, Summer 2024
+date: February 16 2024
 ---
 
-## Handwritten Digit Recognition with a Back-Propagation Network, 1990
+## Outline
 
-Y. Le Cun, B. Boser, J. S. Denker, D. Henderson, R. E. Howard, W. Hubbard, and L. D. Jackel
-
-a.k.a. LeCun90c
-
----
-
-## Yann LeCun
-
-![Yann LeCun on Wikipedia](https://media.tenor.com/nBt6RZkFJh8AAAAi/never-gonna.gif)
-
-Chief AI Scientist (and several other titles) at Facebook, "founding father of convolutional nets."
+- Astronomical populations 
+- Learning from populations 
+- Active learning + Bayesian Optimisation
+- Preliminary results 
 
 ---
 
-## Yann Le Cun vs. Yann LeCun
+
+## Astronomical populations 
+
+
+---
+
+### Stars 
+
+---
+
+### Compact binaries 
+
+---
+
+## Learning from populations
+
+`Population inference`
+
+---
+
+### The 'inference' loop
+
+search 
+
+---
+
+### Population model
+
+---
+
+## Active learning
+
+---
+
+
+![](https://raw.githubusercontent.com/maurock/snake-ga/master/img/notraining.gif)
+![](https://raw.githubusercontent.com/maurock/snake-ga/master/img/snake_new.gif)
+
 
 > All kinds of badly programmed computers thought that "Le" was my middle name. Even the science citation index knew me as "Y. L. Cun", which is one of the reasons I now spell my name "LeCun".
 >
