@@ -1,1 +1,6 @@
 *.html
+*.DS_Store
+*.swp
+*.idea
+__pycache__
+!imgs/gp_animation.html
