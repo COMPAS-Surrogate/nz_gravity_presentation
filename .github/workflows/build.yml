@@ -16,8 +16,8 @@ jobs:
             -V theme=solarized
             --include-in-header=slides.css
       - run: >
-          mkdir gh-pages
-          mv index.html gh-pages/
+          mkdir gh-pages &&
+          mv index.html gh-pages/ &&
           mv imgs gh-pages/imgs
       - uses: peaceiris/actions-gh-pages@v3
         with:
