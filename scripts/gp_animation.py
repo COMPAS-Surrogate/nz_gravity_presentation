@@ -1,8 +1,11 @@
 from skopt import Optimizer
+from skopt.learning import GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import Matern, WhiteKernel
 import numpy as np
 import matplotlib.pyplot as plt
 from skopt.plots import plot_gaussian_process, _evenly_sample
 import plotly.graph_objects as go
+
 
 from plotly.offline import plot
 
@@ -16,13 +19,13 @@ def f(x, noise_level=noise_level):
 
 
 acq_func_kwargs = {"xi": 10000, "kappa": 10000, "noise_level": noise_level ** 2}
-opt = Optimizer([(-2.0, 2.0)], "GP", n_initial_points=3,
+opt = Optimizer([(-2.0, 2.0)], "GP", n_initial_points=1,
                 acq_optimizer="sampling",
                 acq_func_kwargs=acq_func_kwargs,
                 acq_optimizer_kwargs={"noise_level": noise_level ** 2, }
                 )
 
-opt.run(f, n_iter=25)
+opt.run(f, n_iter=15)
 res = opt.get_result()
 
 
@@ -102,14 +105,26 @@ def plotly_gaussian_process(res, n_calls, objective, noise_level, n_points=1000)
     x = x.reshape(-1, 1)
     x_model = x_model.reshape(-1, 1)
 
-    n_random = len(res.x_iters) - len(res.models)
 
     fx = np.array([objective(x_i) for x_i in x])
 
-    model = res.models[n_calls]
 
-    curr_x_iters = res.x_iters[:n_random + n_calls]
-    curr_func_vals = res.func_vals[:n_random + n_calls]
+    if n_calls ==-1:
+        model = GaussianProcessRegressor(
+            kernel=Matern(length_scale=1.0, length_scale_bounds=(1e-1, 10.0),
+                          nu=2.5),
+            normalize_y=True,
+            n_restarts_optimizer=2,
+            random_state=123,
+        )
+        curr_x_iters = np.array([])
+        curr_func_vals = np.array([])
+    else:
+        model = res.models[n_calls]
+        curr_x_iters = res.x_iters[:n_calls+1]
+        curr_func_vals = res.func_vals[:n_calls+1]
+
+
 
     # Plot true function + observations
     true_function = dict(x=x.flatten(), y=fx, mode='lines', name="True (unknown)", line=dict(color='black'))
@@ -120,15 +135,15 @@ def plotly_gaussian_process(res, n_calls, objective, noise_level, n_points=1000)
 
     # Plot GP(x) + contours
     y_pred, sigma = model.predict(x_model, return_std=True)
-    gp_curve = dict(x=x.flatten(), y=y_pred, mode='lines', name="Model", line=dict(color='rgba(255,165,0,1)'))
+    gp_curve = dict(x=x.flatten(), y=y_pred, mode='lines', name="Model", line=dict(color='rgba(35, 124, 182, 1)'))
     fill_lower = y_pred - 1.96 * sigma
     fill_upper = y_pred + 1.96 * sigma
     fill_trace =dict(
         x=np.concatenate([x.flatten(), x.flatten()[::-1]]),
         y=np.concatenate([fill_lower, fill_upper[::-1]]),
         fill='toself',
-        fillcolor='rgba(255,165,0,0.2)',
-        line=dict(color='rgba(255,165,0,0)'),
+        fillcolor='rgba(35, 124, 182, 0.2)',
+        line=dict(color='rgba(195,219,235,0)'),
         showlegend=False
     )
 
@@ -136,7 +151,7 @@ def plotly_gaussian_process(res, n_calls, objective, noise_level, n_points=1000)
         xaxis=dict(range=[-2, 2]),
         yaxis=dict(range=[-1.2, 1.2]),
         legend=dict(x=0, y=1, font=dict(size=20), bgcolor='rgba(255,255,255,0)', itemwidth=30),
-        showlegend=True,
+        showlegend=False,
         margin = go.layout.Margin(
             l=0,  # left margin
             r=0,  # right margin
@@ -154,7 +169,7 @@ def plotly_plots():
     # Initialize empty list to store frames
     frames = []
 
-    data, layout = plotly_gaussian_process(res, n_calls=0, objective=f_wo_noise, noise_level=noise_level)
+    data, layout = plotly_gaussian_process(res, n_calls=-1, objective=f_wo_noise, noise_level=noise_level)
 
     fig = go.Figure(go.Scatter(**data['true']),  layout=layout)
     fig.add_scatter(**data['observations'])
@@ -163,7 +178,7 @@ def plotly_plots():
 
 
     n_iters = 13
-    for n_iter in range(n_iters):
+    for n_iter in range(-1, n_iters):
         data, layout = plotly_gaussian_process(res, n_calls=n_iter, objective=f_wo_noise, noise_level=noise_level)
         frames.append(go.Frame(data=[
             go.Scatter(**data['true']),
@@ -172,7 +187,7 @@ def plotly_plots():
             go.Scatter(**data['fill_trace']),
         ],
        traces=[0, 1, 2, 3], # traces 0-3 are updated
-       name=f"iter{n_iter}"))
+       name=f"iter{n_iter+1}"))
 
     fig.update(frames=frames)
 
@@ -187,7 +202,7 @@ def plotly_plots():
             ),
             dict(
                 args=[[None], {"frame": {"duration": 0, "redraw": True},
-                               "mode": "immedsiate",
+                               "mode": "immediate",
                                "transition": {"duration": 0}}],
                 label="Pause",
                 method="animate"
@@ -211,8 +226,8 @@ def plotly_plots():
                     [f'iter{k}'],
                     dict(mode='immediate', frame=dict(duration=400, redraw=True), transition=dict(duration=0))
                 ],
-                label=f'{k + 1}'
-            ) for k in range(n_iters)
+                label=f'{k }'
+            ) for k in range(n_iters+1)
             ],
             active=0,
             transition=dict(duration=0),
